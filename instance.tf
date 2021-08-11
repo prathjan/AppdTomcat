@@ -294,15 +294,14 @@ resource "null_resource" "vm_node_init" {
     }
   }
   # for each of the app wars, create a tomcat instance and deploy the service
-   dynamic "appsvc" {
         for_each = local.appwars
         appwar = local.appwars[each.value]["appwar"]
         appcontext = local.appwars[each.value]["appcontext"]
         svcport = local.appwars[each.value]["svcport"]
         svrport = local.appwars[each.value]["svrport"]
         svcname = local.appwars[each.value]["svcname"]
-   }
 }
+
 
 output "vm_deploy" {
   value = [vsphere_virtual_machine.vm_deploy.*.name, vsphere_virtual_machine.vm_deploy.*.default_ip_address]
