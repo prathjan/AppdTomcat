@@ -295,7 +295,7 @@ resource "null_resource" "vm_node_init" {
   }
 }
 
-resource "null_resource" "vm_node_init" {
+resource "null_resource" "vm_node_init2" {
   # for each of the app wars, create a tomcat instance and deploy the service
         for_each = local.appwars
         appwar = local.appwars[each.value]["appwar"]
