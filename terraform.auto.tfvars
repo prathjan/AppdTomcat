@@ -5,7 +5,7 @@
 
 
 
-globalwsname = "appd_globalvar"
+globalwsname = "AppdTomcatGlobal"
 
 
 vsphere_server = "10.88.168.24"	
