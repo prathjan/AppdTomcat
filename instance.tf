@@ -244,7 +244,7 @@ resource "null_resource" "vm_node_init" {
 
   provisioner "file" {
     source = "scripts/tominstance.sh"
-    destination = "/tmp"
+    destination = "/tmp/tominstance.sh"
     connection {
       type = "ssh"
       host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
@@ -257,7 +257,7 @@ resource "null_resource" "vm_node_init" {
 
   provisioner "file" {
     source = "scripts/server.xml"
-    destination = "/tmp"
+    destination = "/tmp/server.xml"
     connection {
       type = "ssh"
       host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
@@ -270,7 +270,7 @@ resource "null_resource" "vm_node_init" {
 
   provisioner "file" {
     source = "scripts/shutdown.sh"
-    destination = "/tmp"
+    destination = "/tmp/shutdown.sh"
     connection {
       type = "ssh"
       host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
@@ -283,7 +283,7 @@ resource "null_resource" "vm_node_init" {
 
   provisioner "file" {
     source = "scripts/startup.sh"
-    destination = "/tmp"
+    destination = "/tmp/startup.sh"
     connection {
       type = "ssh"
       host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
@@ -296,7 +296,7 @@ resource "null_resource" "vm_node_init" {
 
   provisioner "file" {
     source = "scripts/context.xml"
-    destination = "/tmp"
+    destination = "/tmp/conbtext.xnml"
     connection {
       type = "ssh"
       host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
