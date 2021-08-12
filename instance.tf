@@ -332,7 +332,6 @@ resource "null_resource" "vm_node_init" {
   #      svcport = local.appwars[each.value]["svcport"]
   #      svrport = local.appwars[each.value]["svrport"]
   #      svcname = local.appwars[each.value]["svcname"]
-}
 
 output "vm_deploy" {
   value = [vsphere_virtual_machine.vm_deploy.*.name, vsphere_virtual_machine.vm_deploy.*.default_ip_address]
