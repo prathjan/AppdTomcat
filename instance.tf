@@ -346,6 +346,6 @@ output "app_deploy" {
 locals {
   download = yamldecode(data.terraform_remote_state.global.outputs.download)
   install = yamldecode(data.terraform_remote_state.global.outputs.install)
-  appwars = yamldecode(data.terraform_remote_state.global.outputs.apps)
+  appwars = ${data.terraform_remote_state.global.outputs.apps}
 }
 
