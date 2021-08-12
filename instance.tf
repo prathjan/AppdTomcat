@@ -243,6 +243,19 @@ resource "null_resource" "vm_node_init" {
   }
 
   provisioner "file" {
+    source = "scripts/tominstance.sh"
+    destination = "/tmp"
+    connection {
+      type = "ssh"
+      host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
+      user = "root"
+      password = "${var.root_password}"
+      port = "22"
+      agent = false
+    }
+  }
+
+  provisioner "file" {
     source = "scripts/server.xml"
     destination = "/tmp"
     connection {
@@ -293,16 +306,32 @@ resource "null_resource" "vm_node_init" {
       agent = false
     }
   }
+
+
+  provisioner "remote-exec" {
+    inline = [
+        "chmod +x /tmp/tominstance.sh",
+        "/tmp/tominstance.sh local.appwars",
+    ]
+    connection {
+      type = "ssh"
+      host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
+      user = "cisco"
+      password = "${var.root_password}"
+      port = "22"
+      agent = false
+    }
+  }
+
 }
 
-resource "null_resource" "vm_node_init2" {
   # for each of the app wars, create a tomcat instance and deploy the service
-        for_each = local.appwars
-        appwar = local.appwars[each.value]["appwar"]
-        appcontext = local.appwars[each.value]["appcontext"]
-        svcport = local.appwars[each.value]["svcport"]
-        svrport = local.appwars[each.value]["svrport"]
-        svcname = local.appwars[each.value]["svcname"]
+  #      for_each = local.appwars
+  #      appwar = local.appwars[each.value]["appwar"]
+  #      appcontext = local.appwars[each.value]["appcontext"]
+  #      svcport = local.appwars[each.value]["svcport"]
+  #      svrport = local.appwars[each.value]["svrport"]
+  #      svcname = local.appwars[each.value]["svcname"]
 }
 
 output "vm_deploy" {
