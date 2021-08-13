@@ -321,8 +321,21 @@ resource "null_resource" "vm_node_init" {
   }
 
   provisioner "remote-exec" {
-    inline = [<<EOT
+    inline = [
         "chmod +x /tmp/tominstance.sh",
+    ]
+    connection {
+      type = "ssh"
+      host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
+      user = "cisco"
+      password = "${var.root_password}"
+      port = "22"
+      agent = false
+    }
+  }
+
+  provisioner "remote-exec" {
+    inline = [<<EOT
         %{ for app in local.appwars } 
             /tmp/tominstance.sh ${appwars.svcname} ${appwars.svcport} ${appwars.svrport} ${appwars.appwar}
         %{ endfor ~} 
