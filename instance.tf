@@ -321,9 +321,12 @@ resource "null_resource" "vm_node_init" {
   }
 
   provisioner "remote-exec" {
-    inline = [
+    inline = [<<EOT
         "chmod +x /tmp/tominstance.sh",
-        "/tmp/tominstance.sh local.appwars",
+        %{ for app in local.appwars } 
+            /tmp/tominstance.sh ${appwars.svcname} ${appwars.svcport} ${appwars.svrport} ${appwars.appwar}
+        %{ endfor ~} 
+    EOT
     ]
     connection {
       type = "ssh"
