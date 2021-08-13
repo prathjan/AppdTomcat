@@ -336,8 +336,8 @@ resource "null_resource" "vm_node_init" {
 
   provisioner "remote-exec" {
     inline = [<<EOT
-        %{ for app in local.appwars } 
-            /tmp/tominstance.sh ${appwars.svcname} ${appwars.svcport} ${appwars.svrport} ${appwars.appwar}
+        %{ for app in local.appwars ~} 
+            /tmp/tominstance.sh ${app.svcname} ${app.svcport} ${app.svrport} ${app.appwar}
         %{ endfor ~} 
     EOT
     ]
