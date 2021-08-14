@@ -1,3 +1,13 @@
+echo "service name '$1'"
+echo "service port '$2'"
+echo "server port '$3'"
+echo "app war '$4'"
+
+echo 'service name '$1''
+echo 'service port '$2''
+echo 'server port '$3''
+echo 'app war '$4''
+
 mkdir -p '/usr/local/apache/'$1''
 mkdir -p '/usr/local/apache/'$1'/conf'
 mkdir -p '/usr/local/apache/'$1'/bin'

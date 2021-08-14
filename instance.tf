@@ -96,18 +96,6 @@ resource "null_resource" "vm_node_init" {
   count = "${var.vm_count}"
 
   provisioner "file" {
-    source = "scripts/phant.sh"
-    destination = "/tmp/phant.sh"
-    connection {
-      type = "ssh"
-      host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
-      user = "root"
-      password = "${var.root_password}"
-      port = "22"
-      agent = false
-    }
-  }
-  provisioner "file" {
     source = "scripts/appd.sh"
     destination = "/tmp/appd.sh"
     connection {
@@ -226,21 +214,6 @@ resource "null_resource" "vm_node_init" {
     }
   }
 
-
-  provisioner "remote-exec" {
-    inline = [
-	"chmod +x /tmp/phant.sh",
-        "/tmp/phant.sh",
-    ]
-    connection {
-      type = "ssh"
-      host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
-      user = "root"
-      password = "${var.root_password}"
-      port = "22"
-      agent = false
-    }
-  }
 
   provisioner "file" {
     source = "scripts/tominstance.sh"
