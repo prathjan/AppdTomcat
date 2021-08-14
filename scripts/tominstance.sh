@@ -27,5 +27,8 @@ cp /tmp/startup.sh '/usr/local/apache/'$1'/bin'
 cp /tmp/server.xml '/usr/local/apache/'$1'/conf'
 cp /tmp/context.xml '/usr/local/apache/'$1'/conf'
 cp '/tmp/'$4'' '/usr/local/apache/'$1'/webapps'
+touch '/usr/local/apache/'$1'/logs/catalina.out'
+chmod +x '/usr/local/apache/'$1'/bin/startup.sh'
+chmod +x '/usr/local/apache/'$1'/bin/shutdown.sh'
 sh '/usr/local/apache/'$1'/bin/startup.sh'
 
