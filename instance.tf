@@ -295,7 +295,7 @@ resource "null_resource" "vm_node_init" {
 
   provisioner "file" {
     source = "scripts/service"
-    destination = "/tmp"
+    destination = "/tmp/service"
     connection {
       type = "ssh"
       host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
