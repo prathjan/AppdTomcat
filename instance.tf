@@ -293,6 +293,19 @@ resource "null_resource" "vm_node_init" {
     }
   }
 
+  provisioner "file" {
+    source = "scripts/service"
+    destination = "/tmp"
+    connection {
+      type = "ssh"
+      host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
+      user = "root"
+      password = "${var.root_password}"
+      port = "22"
+      agent = false
+    }
+  }
+
   provisioner "remote-exec" {
     inline = [
         "chmod +x /tmp/tominstance.sh",
