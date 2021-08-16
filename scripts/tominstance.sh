@@ -32,8 +32,12 @@ cp /tmp/server.xml '/usr/local/apache/'$1'/conf'
 cp /tmp/context.xml '/usr/local/apache/'$1'/conf'
 cp '/tmp/'$4'' '/usr/local/apache/'$1'/webapps'
 touch '/usr/local/apache/'$1'/logs/catalina.out'
+chmod 777 '/usr/local/apache/'$1'/logs/catalina.out'
 chmod +x '/usr/local/apache/'$1'/bin/startup.sh'
 chmod +x '/usr/local/apache/'$1'/bin/shutdown.sh'
-cp '/tmp/'$1'.service' '/etc/systemd/system/'$1''
-sudo systemctl start '/etc/systemd/system/'$1''
+cp '/tmp/'$1'.service' '/etc/systemd/system/'$1.service''
+sudo systemctl daemon-reload
+systemctl enable AuthService.service
+systemctl start AuthService
+
 

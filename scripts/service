@@ -12,8 +12,8 @@ Environment=CATALINA_BASE=/usr/local/apache/svcname
 Environment='CATALINA_OPTS=-Xms512M -Xmx1024M -server -XX:+UseParallelGC'
 Environment='JAVA_OPTS=-Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom'
 
-ExecStart=/usr/local/apache/svcname/bin/startup.sh
-ExecStop=/usr/local/apache/svcname/bin/shutdown.sh
+ExecStart=/bin/bash /usr/local/apache/svcname/bin/startup.sh
+ExecStop=/bin/bash /usr/local/apache/svcname/bin/shutdown.sh
 
 User=cisco
 Group=cisco
