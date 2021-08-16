@@ -17,7 +17,7 @@
 -->
 <!-- The contents of this file will be loaded for each web application -->
 <Context>
-    <Environment name="servicePort" value="$svcport"
+    <Environment name="servicePort" value="svcport"
         type="java.lang.String" override="false"/>
     <Environment name="registryURL" value="http://localhost:8080/tools.descartes.teastore.registry/rest/services/"
         type="java.lang.String" override="false"/>
