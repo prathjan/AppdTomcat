@@ -36,9 +36,10 @@ chmod 777 '/usr/local/apache/'$1'/logs/catalina.out'
 chmod +x '/usr/local/apache/'$1'/bin/startup.sh'
 chmod +x '/usr/local/apache/'$1'/bin/shutdown.sh'
 cp '/tmp/'$1'.service' '/etc/systemd/system/'$1.service''
+echo '***file:'$1.service''
 sudo systemctl daemon-reload
-systemctl enable '$1.service' 
-systemctl start '$1'
+systemctl enable ''$1'.service' 
+systemctl 'start '$1''
  
 
 
