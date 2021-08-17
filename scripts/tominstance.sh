@@ -10,7 +10,7 @@ echo 'app war '$4''
 
 mkdir -p '/usr/local/apache/'$1''
 mkdir -p '/usr/local/apache/'$1'/conf'
-cp -r /usr/local/apache/apache-tomcat-7/conf/* '/usr/local/apache/'$1'/conf/*'
+cp -r /usr/local/apache/apache-tomcat-7/conf/* '/usr/local/apache/'$1'/conf'
 mkdir -p '/usr/local/apache/'$1'/bin'
 mkdir -p '/usr/local/apache/'$1'/logs'
 mkdir -p '/usr/local/apache/'$1'/webapps'
