@@ -10,7 +10,7 @@ echo 'app war '$4''
 
 mkdir -p '/usr/local/apache/'$1''
 mkdir -p '/usr/local/apache/'$1'/conf'
-cp -r /usr/local/apache/apache-tomcat-7/conf/* '/usr/local/apache/'$1'/conf'
+#cp -r /usr/local/apache/apache-tomcat-7/conf/* '/usr/local/apache/'$1'/conf'
 mkdir -p '/usr/local/apache/'$1'/bin'
 mkdir -p '/usr/local/apache/'$1'/logs'
 mkdir -p '/usr/local/apache/'$1'/webapps'
@@ -32,15 +32,15 @@ cp /tmp/output2.file '/usr/local/apache/'$1'/bin/startup.sh'
 cp /tmp/output1.file '/usr/local/apache/'$1'/conf/server.xml'
 cp /tmp/output4.file '/usr/local/apache/'$1'/conf/context.xml'
 cp '/tmp/'$4'' '/usr/local/apache/'$1'/webapps'
-touch '/usr/local/apache/'$1'/logs/catalina.out'
-chmod 777 '/usr/local/apache/'$1'/logs/catalina.out'
+#touch '/usr/local/apache/'$1'/logs/catalina.out'
+#chmod 777 '/usr/local/apache/'$1'/logs/catalina.out'
 chmod +x '/usr/local/apache/'$1'/bin/startup.sh'
 chmod +x '/usr/local/apache/'$1'/bin/shutdown.sh'
 cp '/tmp/output5.file' '/etc/systemd/system/'$1.service''
 echo '***file:'$1.service''
-sudo systemctl daemon-reload
-systemctl enable ''$1'.service' 
-systemctl start $1
+#sudo systemctl daemon-reload
+#systemctl enable ''$1'.service' 
+#systemctl start $1
  
 
 
