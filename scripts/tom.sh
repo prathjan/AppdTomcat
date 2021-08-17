@@ -11,8 +11,8 @@ sudo systemctl daemon-reload
 sudo systemctl start apache-tomcat-7
 sudo ufw allow 8080
 sudo apt install git -y
-cd /opt/appdynamics
-sudo chown -R cisco:cisco /opt/appdynamics
-git clone https://github.com/Appdynamics/DevNet-Labs.git
-sudo chmod 754 /opt/appdynamics/DevNet-Labs/applications/Load-Generator/phantomjs/*.sh
+#cd /opt/appdynamics
+#sudo chown -R cisco:cisco /opt/appdynamics
+#git clone https://github.com/Appdynamics/DevNet-Labs.git
+#sudo chmod 754 /opt/appdynamics/DevNet-Labs/applications/Load-Generator/phantomjs/*.sh
 

@@ -14,6 +14,17 @@ mkdir -p '/usr/local/apache/'$1'/conf'
 mkdir -p '/usr/local/apache/'$1'/bin'
 mkdir -p '/usr/local/apache/'$1'/logs'
 mkdir -p '/usr/local/apache/'$1'/webapps'
+mkdir -p '/usr/local/apache/'$1'/temp'
+mkdir -p '/usr/local/apache/'$1'/work'
+sudo chgrp -R cisco '/usr/local/apache/'$1'/'
+sudo chown -R cisco '/usr/local/apache/'$1'/webapps'
+sudo chown -R cisco '/usr/local/apache/'$1'/work'
+sudo chown -R cisco '/usr/local/apache/'$1'/temp'
+sudo chown -R cisco '/usr/local/apache/'$1'/logs' 
+
+
+
+
 sed 's/svcport/'$2'/g' /tmp/server.xml > /tmp/output.file
 sed 's/svcport/'$2'/g' /tmp/context.xml > /tmp/output4.file
 #cp /tmp/output4.file /tmp/context.xml
@@ -38,9 +49,9 @@ chmod +x '/usr/local/apache/'$1'/bin/startup.sh'
 chmod +x '/usr/local/apache/'$1'/bin/shutdown.sh'
 cp '/tmp/output5.file' '/etc/systemd/system/'$1.service''
 echo '***file:'$1.service''
-#sudo systemctl daemon-reload
-#systemctl enable ''$1'.service' 
-#systemctl start $1
+sudo systemctl daemon-reload
+systemctl enable ''$1'.service' 
+systemctl start $1
  
 
 
