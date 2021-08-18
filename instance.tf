@@ -105,9 +105,9 @@ resource "vsphere_virtual_machine" "vm_deploy" {
 
 
 resource "null_resource" "vm_node_init" {
-  depends_on = [
-      mysql_database.teadb,
-  ]
+#  depends_on = [
+#      mysql_database.teadb,
+#  ]
   count = "${var.vm_count}"
 
   provisioner "file" {
