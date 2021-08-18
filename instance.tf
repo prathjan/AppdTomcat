@@ -92,16 +92,16 @@ resource "vsphere_virtual_machine" "vm_deploy" {
 }
 
 # Configure the MySQL provider
-provider "mysql" {
-  endpoint = "${vsphere_virtual_machine.vm_deploy[0].default_ip_address}:3306"
-  username = "teauser"
-  password = "teapassword"
-}
+#provider "mysql" {
+#  endpoint = "${vsphere_virtual_machine.vm_deploy[0].default_ip_address}:3306"
+#  username = "teauser"
+#  password = "teapassword"
+#}
 
 # Create a Database
-resource "mysql_database" "teadb" {
-  name = "teadb"
-}
+#resource "mysql_database" "teadb" {
+#  name = "teadb"
+#}
 
 
 resource "null_resource" "vm_node_init" {
