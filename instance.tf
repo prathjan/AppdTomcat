@@ -104,7 +104,7 @@ resource "vsphere_virtual_machine" "vm_deploy" {
 
 # Configure the MySQL provider
 provider "mysql" {
-  endpoint = local.dbvm[1] 
+  endpoint = local.dbvmname 
   username = "teauser"
   password = "teapassword"
 }
@@ -400,6 +400,6 @@ locals {
   download = yamldecode(data.terraform_remote_state.global.outputs.download)
   install = yamldecode(data.terraform_remote_state.global.outputs.install)
   appwars = data.terraform_remote_state.global.outputs.apps
-  dbvm = data.terraform_remote_state.dbvm.outputs.vm_deploy
+  dbvmname = data.terraform_remote_state.dbvm.outputs.vm_name
 }
 
