@@ -400,6 +400,6 @@ locals {
   download = yamldecode(data.terraform_remote_state.global.outputs.download)
   install = yamldecode(data.terraform_remote_state.global.outputs.install)
   appwars = data.terraform_remote_state.global.outputs.apps
-  dbvm = data.terraform_remote_state.global.outputs.vm_deploy
+  dbvm = data.terraform_remote_state.dbvm.outputs.vm_deploy
 }
 
