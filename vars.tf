@@ -3,6 +3,10 @@ variable "globalwsname" {
   type = string
 }
 
+// The zero agent version
+variable "dbvmwsname" {
+  type = string
+}
 // The vsphere ip address
 variable "vsphere_server" {
   type = string

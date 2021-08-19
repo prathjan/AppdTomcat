@@ -9,6 +9,17 @@ data "terraform_remote_state" "global" {
   }
 }
 
+#get the db serer name
+data "terraform_remote_state" "dbvm" {
+  backend = "remote"
+  config = {
+    organization = "Lab14"
+    workspaces = {
+      name = var.dbvmwsname
+    }
+  }
+}
+
 
 data "vsphere_datacenter" "dc" {
   name = var.datacenter
@@ -92,16 +103,16 @@ resource "vsphere_virtual_machine" "vm_deploy" {
 }
 
 # Configure the MySQL provider
-#provider "mysql" {
-#  endpoint = "${vsphere_virtual_machine.vm_deploy[0].default_ip_address}:3306"
-#  username = "teauser"
-#  password = "teapassword"
-#}
+provider "mysql" {
+  endpoint = local.dbvm[1] 
+  username = "teauser"
+  password = "teapassword"
+}
 
 # Create a Database
-#resource "mysql_database" "teadb" {
-#  name = "teadb"
-#}
+resource "mysql_database" "teadb" {
+  name = "teadb"
+}
 
 
 resource "null_resource" "vm_node_init" {
@@ -389,5 +400,6 @@ locals {
   download = yamldecode(data.terraform_remote_state.global.outputs.download)
   install = yamldecode(data.terraform_remote_state.global.outputs.install)
   appwars = data.terraform_remote_state.global.outputs.apps
+  dbvm = data.terraform_remote_state.global.outputs.vm_deploy
 }
 
