@@ -103,30 +103,30 @@ resource "vsphere_virtual_machine" "vm_deploy" {
 }
 
 # Configure the MySQL provider
-provider "mysql" {
-  endpoint = "10.88.168.226:3306" 
-  #endpoint = "${local.dbvmip}:3306" 
-  username = "root"
-  password = "root" 
-  #password = "${local.mysql_pass}" 
-}
-
-# Create a Database
-resource "mysql_database" "teadb" {
-  name = "teadb"
-}
-
-resource "mysql_user" "teauser" {
-  user               = "teauser"
-  plaintext_password = "teapassword"
-}
-
-resource "mysql_grant" "teauser" {
-  user       = mysql_user.teauser.user
-  host       = mysql_user.teauser.host
-  database   = "teadb"
-  privileges = ["ALL"]
-}
+#provider "mysql" {
+#  endpoint = "10.88.168.226:3306" 
+#  #endpoint = "${local.dbvmip}:3306" 
+#  username = "root"
+#  password = "root" 
+#  #password = "${local.mysql_pass}" 
+#}
+#
+## Create a Database
+#resource "mysql_database" "teadb" {
+#  name = "teadb"
+#}
+#
+#resource "mysql_user" "teauser" {
+#  user               = "teauser"
+#  plaintext_password = "teapassword"
+#}
+#
+#resource "mysql_grant" "teauser" {
+#  user       = mysql_user.teauser.user
+#  host       = mysql_user.teauser.host
+#  database   = "teadb"
+#  privileges = ["ALL"]
+#}
 
 
 resource "null_resource" "vm_node_init" {
