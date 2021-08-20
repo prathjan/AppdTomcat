@@ -104,9 +104,11 @@ resource "vsphere_virtual_machine" "vm_deploy" {
 
 # Configure the MySQL provider
 provider "mysql" {
-  endpoint = "${local.dbvmip}:3306" 
+  endpoint = "10.88.168.226:3306" 
+  #endpoint = "${local.dbvmip}:3306" 
   username = "root"
-  password = "${local.mysql_pass}" 
+  password = "root" 
+  #password = "${local.mysql_pass}" 
 }
 
 # Create a Database
