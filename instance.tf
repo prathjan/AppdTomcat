@@ -104,9 +104,9 @@ resource "vsphere_virtual_machine" "vm_deploy" {
 
 # Configure the MySQL provider
 provider "mysql" {
-  endpoint = local.dbvmname 
-  username = "teauser"
-  password = "teapassword"
+  endpoint = "${local.dbvmname}" 
+  username = "root"
+  password = "${local.mysql_pass}" 
 }
 
 # Create a Database
@@ -114,11 +114,20 @@ resource "mysql_database" "teadb" {
   name = "teadb"
 }
 
+resource "mysql_user" "teauser" {
+  user               = "teauser"
+  plaintext_password = "teapassword"
+}
+
+resource "mysql_grant" "teauser" {
+  user       = mysql_user.teauser.user
+  host       = mysql_user.teauser.host
+  database   = "teadb"
+  privileges = ["ALL"]
+}
+
 
 resource "null_resource" "vm_node_init" {
-#  depends_on = [
-#      mysql_database.teadb,
-#  ]
   count = "${var.vm_count}"
 
   provisioner "file" {
@@ -362,7 +371,7 @@ resource "null_resource" "vm_node_init" {
   provisioner "remote-exec" {
     inline = [<<EOT
         %{ for app in local.appwars ~} 
-            /tmp/tominstance.sh ${app.svcname} ${app.svcport} ${app.svrport} ${app.appwar}
+            /tmp/tominstance.sh ${app.svcname} ${app.svcport} ${app.svrport} ${app.appwar} ${local.dbvmname}
         %{ endfor ~} 
     EOT
     ]
@@ -401,5 +410,6 @@ locals {
   install = yamldecode(data.terraform_remote_state.global.outputs.install)
   appwars = data.terraform_remote_state.global.outputs.apps
   dbvmname = data.terraform_remote_state.dbvm.outputs.vm_name[0]
+  mysql_pass = yamldecode(data.terraform_remote_state.global.outputs.mysql_pass)
 }
 
