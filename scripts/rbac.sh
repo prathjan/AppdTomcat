@@ -5,5 +5,5 @@ unzip /tmp/devnet-controller-setup.zip
 chmod +x *.sh
 export appd_workshop_user=SBUser
 ./setupWorkshop.sh
-source /home/ec2-user/environment/workshop/application.env
+. /home/ec2-user/environment/workshop/application.env
 echo $APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY
