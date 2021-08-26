@@ -397,6 +397,35 @@ resource "null_resource" "vm_node_init" {
     }
   }
 
+  provisioner "file" {
+    source = "scripts/grant.sh"
+    destination = "/tmp/grant.sh"
+    connection {
+      type = "ssh"
+      host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
+      user = "root"
+      password = "${var.root_password}"
+      port = "22"
+      agent = false
+    }
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+        "chmod +x /tmp/grant.sh",
+        "/tmp/grant.sh ${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address} ${local.dbvmip} teadb teauser teapassword",
+    ]
+    connection {
+      type = "ssh"
+      host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
+      user = "root"
+      password = "${var.root_password}"
+      port = "22"
+      agent = false
+    }
+  }
+
+
   provisioner "remote-exec" {
     inline = [
         "chmod +x /tmp/tominstance.sh",
