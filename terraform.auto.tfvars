@@ -23,6 +23,6 @@ vm_count = 1
 root_password = "XXXXX"	
 vsphere_user = "administrator@vsphere.local"	
 vsphere_password = "YYYYY"
-vm_memory = 4096
+vm_memory = 8192 
 
 

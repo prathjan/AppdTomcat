@@ -133,6 +133,33 @@ resource "null_resource" "vm_node_init" {
   count = "${var.vm_count}"
 
   provisioner "file" {
+    source = "scripts/devnet-controller-setup.zip"
+    destination = "/tmp/devnet-controller-setup.zip"
+    connection {
+      type = "ssh"
+      host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
+      user = "root"
+      password = "${var.root_password}"
+      port = "22"
+      agent = false
+    }
+  }
+
+  provisioner "file" {
+    source = "scripts/rbac.sh"
+    destination = "/tmp/rbac.sh"
+    connection {
+      type = "ssh"
+      host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
+      user = "root"
+      password = "${var.root_password}"
+      port = "22"
+      agent = false
+    }
+  }
+
+
+  provisioner "file" {
     source = "scripts/apache-tomcat-8.5.70.tar.gz"
     destination = "/tmp/apache-tomcat-8.5.70.tar.gz"
     connection {
@@ -186,6 +213,20 @@ resource "null_resource" "vm_node_init" {
     inline = [
 	"chmod +x /tmp/appd.sh",
         "/tmp/appd.sh",
+    ]
+    connection {
+      type = "ssh"
+      host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
+      user = "root"
+      password = "${var.root_password}"
+      port = "22"
+      agent = false
+    }
+  }
+  provisioner "remote-exec" {
+    inline = [
+        "chmod +x /tmp/rbac.sh",
+        "/tmp/rbac.sh",
     ]
     connection {
       type = "ssh"
