@@ -1,4 +1,4 @@
-sudo apt install mysql-client
+sudo apt install -y mysql-client
 dbhost=$2
 vmip=$1
 db=$3
