@@ -241,7 +241,7 @@ resource "null_resource" "vm_node_init" {
     inline = [
         "chmod +x /tmp/rbac.sh",
         "${local.download}",
-	"/tmp/rbac.sh ${local.install}"
+	"/tmp/rbac.sh ${local.install}",
     ]
     connection {
       type = "ssh"
