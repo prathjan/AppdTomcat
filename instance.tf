@@ -241,7 +241,9 @@ resource "null_resource" "vm_node_init" {
     inline = [
         "chmod +x /tmp/rbac.sh",
         "${local.download}",
-	"/tmp/rbac.sh ${local.install}",
+	"/tmp/rbac.sh",
+	"echo $APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY",
+	"${local.install}",
     ]
     connection {
       type = "ssh"
