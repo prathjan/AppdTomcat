@@ -50,6 +50,10 @@ cp '/tmp/'$4'' '/usr/local/apache/'$1'/webapps'
 #chmod 777 '/usr/local/apache/'$1'/logs/catalina.out'
 chmod +x '/usr/local/apache/'$1'/bin/startup.sh'
 chmod +x '/usr/local/apache/'$1'/bin/shutdown.sh'
+
+echo '***starting service'
+'/usr/local/apache/'$1'/bin/startup.sh'
+
 cp '/tmp/output5.file' '/etc/systemd/system/'$1.service''
 echo '***file:'$1.service''
 sudo systemctl daemon-reload
