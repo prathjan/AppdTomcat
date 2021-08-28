@@ -242,6 +242,7 @@ resource "null_resource" "vm_node_init" {
         "chmod +x /tmp/rbac.sh",
         "${local.download}",
 	"/tmp/rbac.sh",
+	"echo ${local.install}",
 	"echo $APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY",
 	"${local.install}",
     ]
