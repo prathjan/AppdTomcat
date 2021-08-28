@@ -242,7 +242,7 @@ resource "null_resource" "vm_node_init" {
         "chmod +x /tmp/rbac.sh",
         "${local.download}",
 	"/tmp/rbac.sh",
-	"source /home/ec2-user/environment/workshop/application.env",
+	". /home/ec2-user/environment/workshop/application.env",
 	"echo echoing install",
 	"echo ${local.install}",
 	"echo echoing accesskey",
@@ -317,6 +317,19 @@ resource "null_resource" "vm_node_init" {
   provisioner "file" {
     source = "scripts/tominstance.sh"
     destination = "/tmp/tominstance.sh"
+    connection {
+      type = "ssh"
+      host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
+      user = "root"
+      password = "${var.root_password}"
+      port = "22"
+      agent = false
+    }
+  }
+
+  provisioner "file" {
+    source = "scripts/startsvc.sh"
+    destination = "/tmp/startsvc.sh"
     connection {
       type = "ssh"
       host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
@@ -449,6 +462,20 @@ resource "null_resource" "vm_node_init" {
   }
 
   provisioner "remote-exec" {
+    inline = [
+        "chmod +x /tmp/startsvc.sh",
+    ]
+    connection {
+      type = "ssh"
+      host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
+      user = "root"
+      password = "${var.root_password}"
+      port = "22"
+      agent = false
+    }
+  }
+
+  provisioner "remote-exec" {
     inline = [<<EOT
         %{ for app in local.appwars ~} 
             /tmp/tominstance.sh ${app.svcname} ${app.svcport} ${app.svrport} ${app.appwar} ${local.dbvmip}
@@ -464,6 +491,24 @@ resource "null_resource" "vm_node_init" {
       agent = false
     }
   }
+
+  provisioner "remote-exec" {
+    inline = [<<EOT
+        %{ for app in local.appwars ~}
+            /tmp/startsvc.sh ${app.svcname} ${app.svcport} ${app.svrport} ${app.appwar} ${local.dbvmip}
+        %{ endfor ~}
+    EOT
+    ]
+    connection {
+      type = "ssh"
+      host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
+      user = "root"
+      password = "${var.root_password}"
+      port = "22"
+      agent = false
+    }
+  }
+
 
 }
 
