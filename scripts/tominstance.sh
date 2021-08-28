@@ -23,6 +23,8 @@ sudo chown -R cisco '/usr/local/apache/'$1'/webapps'
 sudo chown -R cisco '/usr/local/apache/'$1'/work'
 sudo chown -R cisco '/usr/local/apache/'$1'/temp'
 sudo chown -R cisco '/usr/local/apache/'$1'/logs' 
+sudo chgrp -R cisco '/usr/local/apache'
+sudo chown -R cisco '/usr/local/apache'
 
 
 

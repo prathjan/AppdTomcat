@@ -242,8 +242,12 @@ resource "null_resource" "vm_node_init" {
         "chmod +x /tmp/rbac.sh",
         "${local.download}",
 	"/tmp/rbac.sh",
+	"source /home/ec2-user/environment/workshop/application.env",
+	"echo echoing install",
 	"echo ${local.install}",
+	"echo echoing accesskey",
 	"echo $APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY",
+	"echo installing",
 	"${local.install}",
     ]
     connection {
