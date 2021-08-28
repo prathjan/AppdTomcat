@@ -248,7 +248,7 @@ resource "null_resource" "vm_node_init" {
 	"echo echoing accesskey",
 	"echo $APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY",
 	"echo replacement",
-	"echo ${local.install/fillmein/'$APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY'} > /tmp/installcmd.sh",
+	"echo ${local.install/fillmein/"$APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY"} > /tmp/installcmd.sh",
 	"echo installing",
 	"${local.install}",
     ]
