@@ -249,9 +249,10 @@ resource "null_resource" "vm_node_init" {
 	"echo $APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY",
 	"echo replacement",
 	"echo ${local.install} > /tmp/installcmd.sh",
-	"sed 's/fillmein/$APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY/g' /tmp/installcmd.sh > /tmp/installexec.sh",
+	"sed 's/fillmein/'$APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY'/g' /tmp/installcmd.sh > /tmp/installexec.sh",
+	"chmod +x /tmp/installexec.sh",
 	"echo installing",
-	"${local.install}",
+	"/tmp/installexec.sh",
     ]
     connection {
       type = "ssh"
