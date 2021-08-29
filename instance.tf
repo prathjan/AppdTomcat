@@ -242,7 +242,6 @@ resource "null_resource" "vm_node_init" {
         "chmod +x /tmp/rbac.sh",
         "${local.download}",
 	"/tmp/rbac.sh",
-	"dos2unix /home/ec2-user/environment/workshop/application.env",
 	". /home/ec2-user/environment/workshop/application.env",
 	"echo echoing install",
 	"echo ${local.install}",
