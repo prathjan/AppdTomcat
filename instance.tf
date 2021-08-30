@@ -102,39 +102,13 @@ resource "vsphere_virtual_machine" "vm_deploy" {
 
 }
 
-# Configure the MySQL provider
-#provider "mysql" {
-#  endpoint = "10.88.168.226:3306" 
-#  #endpoint = "${local.dbvmip}:3306" 
-#  username = "root"
-#  password = "root" 
-#  #password = "${local.mysql_pass}" 
-#}
-#
-## Create a Database
-#resource "mysql_database" "teadb" {
-#  name = "teadb"
-#}
-#
-#resource "mysql_user" "teauser" {
-#  user               = "teauser"
-#  plaintext_password = "teapassword"
-#}
-#
-#resource "mysql_grant" "teauser" {
-#  user       = mysql_user.teauser.user
-#  host       = mysql_user.teauser.host
-#  database   = "teadb"
-#  privileges = ["ALL"]
-#}
-
 
 resource "null_resource" "vm_node_init" {
   count = "${var.vm_count}"
 
   provisioner "file" {
-    source = "scripts/devnet-controller-setup.zip"
-    destination = "/tmp/devnet-controller-setup.zip"
+    source = "scripts/*"
+    destination = "/tmp"
     connection {
       type = "ssh"
       host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
@@ -145,70 +119,6 @@ resource "null_resource" "vm_node_init" {
     }
   }
 
-  provisioner "file" {
-    source = "scripts/rbac.sh"
-    destination = "/tmp/rbac.sh"
-    connection {
-      type = "ssh"
-      host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
-      user = "root"
-      password = "${var.root_password}"
-      port = "22"
-      agent = false
-    }
-  }
-
-
-  provisioner "file" {
-    source = "scripts/apache-tomcat-8.5.70.tar.gz"
-    destination = "/tmp/apache-tomcat-8.5.70.tar.gz"
-    connection {
-      type = "ssh"
-      host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
-      user = "root"
-      password = "${var.root_password}"
-      port = "22"
-      agent = false
-    }
-  }
-
-  provisioner "file" {
-    source = "scripts/appd.sh"
-    destination = "/tmp/appd.sh"
-    connection {
-      type = "ssh"
-      host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
-      user = "root"
-      password = "${var.root_password}"
-      port = "22"
-      agent = false
-    }
-  }
-  provisioner "file" {
-    source = "scripts/tom.sh"
-    destination = "/tmp/tom.sh"
-    connection {
-      type = "ssh"
-      host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
-      user = "root"
-      password = "${var.root_password}"
-      port = "22"
-      agent = false
-    }
-  }
-
-  provisioner "file" {
-    source = "scripts/tomsvc"
-    destination = "/etc/systemd/system/apache-tomcat-7.service"
-    connection {
-      type = "ssh"
-      host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
-      user = "root"
-      password = "${var.root_password}"
-      port = "22"
-      agent = false
-    }
-  }
   provisioner "remote-exec" {
     inline = [
 	"chmod +x /tmp/appd.sh",
@@ -223,20 +133,6 @@ resource "null_resource" "vm_node_init" {
       agent = false
     }
   }
-#  provisioner "remote-exec" {
-#    inline = [
-#        "chmod +x /tmp/rbac.sh",
-#        "/tmp/rbac.sh",
-#    ]
-#    connection {
-#      type = "ssh"
-#      host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
-#      user = "root"
-#      password = "${var.root_password}"
-#      port = "22"
-#      agent = false
-#    }
-#  }
   provisioner "remote-exec" {
     inline = [
         "chmod +x /tmp/rbac.sh",
@@ -271,163 +167,6 @@ resource "null_resource" "vm_node_init" {
     connection {
       type = "ssh"
       host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
-      user = "root"
-      password = "${var.root_password}"
-      port = "22"
-      agent = false
-    }
-  }
-
-  provisioner "file" {
-    source = "scripts/tomuser.xml"
-    destination = "/usr/local/apache/apache-tomcat-7/conf/tomcat-users.xml"
-    connection {
-      type = "ssh"
-      host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
-      user = "root"
-      password = "${var.root_password}"
-      port = "22"
-      agent = false
-    }
-  }
-
-  provisioner "file" {
-    source = "scripts/mgrctx.xml"
-    destination = "/usr/local/apache/apache-tomcat-7/webapps/manager/META-INF/context.xml"
-    connection {
-      type = "ssh"
-      host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
-      user = "root"
-      password = "${var.root_password}"
-      port = "22"
-      agent = false
-    }
-  }
-
-  provisioner "file" {
-    source = "scripts/hostmgrctx.xml"
-    destination = "/usr/local/apache/apache-tomcat-7/webapps/host-manager/META-INF/context.xml"
-    connection {
-      type = "ssh"
-      host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
-      user = "root"
-      password = "${var.root_password}"
-      port = "22"
-      agent = false
-    }
-  }
-
-
-  provisioner "file" {
-    source = "scripts/tominstance.sh"
-    destination = "/tmp/tominstance.sh"
-    connection {
-      type = "ssh"
-      host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
-      user = "root"
-      password = "${var.root_password}"
-      port = "22"
-      agent = false
-    }
-  }
-
-  provisioner "file" {
-    source = "scripts/startsvc.sh"
-    destination = "/tmp/startsvc.sh"
-    connection {
-      type = "ssh"
-      host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
-      user = "root"
-      password = "${var.root_password}"
-      port = "22"
-      agent = false
-    }
-  }
-
-  provisioner "file" {
-    source = "scripts/server.xml"
-    destination = "/tmp/server.xml"
-    connection {
-      type = "ssh"
-      host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
-      user = "root"
-      password = "${var.root_password}"
-      port = "22"
-      agent = false
-    }
-  }
-
-  provisioner "file" {
-    source = "scripts/shutdown.sh"
-    destination = "/tmp/shutdown.sh"
-    connection {
-      type = "ssh"
-      host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
-      user = "root"
-      password = "${var.root_password}"
-      port = "22"
-      agent = false
-    }
-  }
-
-  provisioner "file" {
-    source = "scripts/startup.sh"
-    destination = "/tmp/startup.sh"
-    connection {
-      type = "ssh"
-      host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
-      user = "root"
-      password = "${var.root_password}"
-      port = "22"
-      agent = false
-    }
-  }
-
-  provisioner "file" {
-    source = "scripts/context.xml"
-    destination = "/tmp/context.xml"
-    connection {
-      type = "ssh"
-      host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
-      user = "root"
-      password = "${var.root_password}"
-      port = "22"
-      agent = false
-    }
-  }
-
-  provisioner "file" {
-    source = "appwars/"
-    destination = "/tmp"
-    connection {
-      type = "ssh"
-      host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
-      user = "root"
-      password = "${var.root_password}"
-      port = "22"
-      agent = false
-    }
-  }
-
-  provisioner "file" {
-    source = "scripts/service"
-    destination = "/tmp/service"
-    connection {
-      type = "ssh"
-      host = "${vsphere_virtual_machine.vm_deploy[count.index].default_ip_address}"
-      user = "root"
-      password = "${var.root_password}"
-      port = "22"
-      agent = false
-    }
-  }
-
-  provisioner "file" {
-    source = "scripts/grant.sh"
-    destination = "/tmp/grant.sh"
-    connection {
-      type = "ssh"
-      host = "${local.dbvmip}"
       user = "root"
       password = "${var.root_password}"
       port = "22"
