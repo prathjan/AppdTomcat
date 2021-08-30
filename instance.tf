@@ -107,7 +107,7 @@ resource "null_resource" "vm_node_init" {
   count = "${var.vm_count}"
 
   provisioner "file" {
-    source = "scripts/*"
+    source = "scripts/"
     destination = "/tmp"
     connection {
       type = "ssh"
