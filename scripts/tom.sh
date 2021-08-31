@@ -1,6 +1,7 @@
 cd /tmp
 #curl -O https://downloads.apache.org/tomcat/tomcat-8/v8.5.69/bin/apache-tomcat-8.5.69.tar.gz
 sudo mkdir -p /usr/local/apache/apache-tomcat-7
+sudo mkdir -p /usr/local/apache/images
 sudo tar xzvf apache-tomcat-8.5.70.tar.gz -C /usr/local/apache/apache-tomcat-7 --strip-components=1
 cd /usr/local/apache/apache-tomcat-7/
 sudo chgrp -R cisco /usr/local/apache/apache-tomcat-7
