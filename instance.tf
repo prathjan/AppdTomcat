@@ -150,7 +150,7 @@ resource "null_resource" "vm_node_init" {
     inline = [
         "chmod +x /tmp/rbac.sh",
         "${local.download}",
-	"/tmp/rbac.sh",
+	"/tmp/rbac.sh ${local.nbrapm} ${local.nbrma} ${local.nbrsim} ${local.nbrnet}",
 	". /home/ec2-user/environment/workshop/application.env",
 	"echo echoing install",
 	"echo ${local.install}",
@@ -292,6 +292,10 @@ locals {
   appwars = data.terraform_remote_state.global.outputs.apps
   dbvmname = data.terraform_remote_state.dbvm.outputs.vm_name[0]
   dbvmip = data.terraform_remote_state.dbvm.outputs.vm_ip[0]
+  nbrapm = data.terraform_remote_state.global.outputs.nbrapm
+  nbrma = data.terraform_remote_state.global.outputs.nbrma
+  nbrsim = data.terraform_remote_state.global.outputs.nbrsim
+  nbrnet = data.terraform_remote_state.global.outputs.nbrnet
   mysql_pass = yamldecode(data.terraform_remote_state.global.outputs.mysql_pass)
 }
 
