@@ -4,7 +4,7 @@ cp /tmp/devnet-controller-setup.zip /home/ec2-user/environment/workshop
 #cd /home/ec2-user/environment/workshop
 unzip /home/ec2-user/environment/workshop/devnet-controller-setup.zip -d /home/ec2-user/environment/workshop
 chmod +x /home/ec2-user/environment/workshop/*.sh
-sed 's/nbrapm/'$1'/g' /home/ec2-user/environment/workshop/workshop-setup.yaml > /tmp/workshop.file
+sed 's/nbrapm/'$1'/g' /tmp/workshop-setup.yaml > /tmp/workshop.file
 sed 's/nbrma/'$2'/g' /tmp/workshop.file > /tmp/workshop1.file
 sed 's/nbrsim/'$3'/g' /tmp/workshop1.file > /tmp/workshop2.file
 sed 's/nbrnet/'$4'/g' /tmp/workshop2.file > /tmp/workshop3.file
