@@ -278,6 +278,9 @@ output "app_deploy" {
   })
 }
 
+output "vm_ip" {
+  value = vsphere_virtual_machine.vm_deploy.*.default_ip_address
+}
 
 locals {
   download = yamldecode(data.terraform_remote_state.global.outputs.download)
