@@ -1,4 +1,4 @@
-# Deploying AppDynamics Java Agents with Cisco Intersight Service for Terraform 
+# Enabling AppDynamics Business Insights for a Multi Service Java Application with Cisco Intersight Service for Terraform 
 ## Contents
         Use Case
 
@@ -8,26 +8,44 @@
 
         Setting up TFCB Workspaces
 
-        Retrieve Java agent artifacts using AppDynamics Controller ZFI API's leveraging TFCB
+        Share variables with a Global Workspace
 
-        Deploy a Java application stack and instrument with Java agent leveraging TFCB
+        Database Server Deployment
+
+        Interfacing with AppDynamics Controller API for Provisioning
+
+            Use RBAC script to create AppDynamics User and license rule
+
+            Retrieve and install AppDynamics Zero Agent using AppDynamics Controller ZFI API's 
+
+        Prepping infrastructure & platform for application deployment
+
+        Deploying App Services in a multi instance Tomcat Platform
 
         Generate Application Load
 
         View Application Insights in AppDynamics and Intersight
 
+        Interfacing with AppDynamics Controller API for De-provisioning
+        
+            Use RBAC script to remove AppDynamics User and license rule
+
+            Uninstall AppDynamics Zero Agent
+
+        Undeploy applications and deprovision infrastructure
+
 
 ### Use Case
 
-* As a DevOps and App developer, use IST (Intersight Service for Terraform) to instrument your Java Apps with AppDynamics Java agents
+* As a DevOps and App developer, use IST (Intersight Service for Terraform) to enable existing Micro services for AppDynamics Insights
 
 * As DevOps and App Developer, use Intersight and AppDynamics to get app and infrastructure insights for Full Stack Observability
 
-![alt text](https://github.com/prathjan/images/blob/main/appduse.png?raw=true)
+![alt text](https://github.com/prathjan/images/blob/main/tomflow.png?raw=true)
 
 ### Pre-requisites
 
-1. The VM template that you provision in Step 5 below will have a user "cisco/Cisco123" provisioned. Terraform scripts will use this user credentials to remotely run installation scripts in the VM.
+1. The VM template that you provision in Step 5 below will have a user "root/Cisco123" provisioned. Terraform scripts will use this user credentials to remotely run installation scripts in the VM.
 
 2. Sign up for a user account on Intersight.com. You will need Premier license as well as IWO license to complete this use case. 
 
